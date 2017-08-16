@@ -4,6 +4,7 @@
   "description": "Projeto para estudo de Vuejs",
   "author": "luizantoniojr",
   "private": true,
+  "style": "bulma/css/bulma.css",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",

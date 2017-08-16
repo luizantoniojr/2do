@@ -1,23 +1,22 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <section class="hero is-dark is-fullheight">
+      <app-nav></app-nav>
+      <router-view></router-view>
+      <app-footer></app-footer>
+    </section>
   </div>
 </template>
 
 <script>
+import Nav from './components/Nav'
+import Footer from './components/Footer'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    'app-nav': Nav,
+    'app-footer': Footer
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
