@@ -12,12 +12,18 @@
             </div>
           </div>
         </form>
+        <div class="level-left">
+          <p class="level-item"><a v-bind:class="{'filtro-selecionado':visibility=='all'}" v-on:click="visibility='all'">Todos</a></p>
+          <p class="level-item"><a v-bind:class="{'filtro-selecionado':visibility=='active'}" v-on:click="visibility='active'">Ativos</a></p>
+          <p class="level-item"><a v-bind:class="{'filtro-selecionado':visibility=='completed'}" v-on:click="visibility='completed'">Completos</a></p>
+        </div>
+        <hr v-show="filteredTodos.length > 0">
         <h2 class="subtitle">
           <ul>
-            <li v-for="todo in todos">
+            <li v-for="todo in filteredTodos">
               <div class="view">
                 <input class="toggle" type="checkbox" v-model="todo.completed">
-                <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
+                <label v-bind:class="{'completed':todo.completed}">{{ todo.title }}</label>
                 <a class="destroy" @click="removeTodo(todo)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </a>
@@ -46,12 +52,47 @@ var todoStorage = {
   }
 }
 
+var filters = {
+  all: function (todos) {
+    return todos
+  },
+  active: function (todos) {
+    return todos.filter(function (todo) {
+      return !todo.completed
+    })
+  },
+  completed: function (todos) {
+    return todos.filter(function (todo) {
+      return todo.completed
+    })
+  }
+}
+
 export default {
   name: 'home',
   data () {
     return {
       todos: todoStorage.fetch(),
-      newTodo: ''
+      newTodo: '',
+      visibility: 'all'
+    }
+  },
+  computed: {
+    filteredTodos: function () {
+      return filters[this.visibility](this.todos)
+    },
+    remaining: function () {
+      return filters.active(this.todos).length
+    },
+    allDone: {
+      get: function () {
+        return this.remaining === 0
+      },
+      set: function (value) {
+        this.todos.forEach(function (todo) {
+          todo.completed = value
+        })
+      }
     }
   },
   methods: {
@@ -77,5 +118,12 @@ export default {
 <style scoped>
 .fa-times {
   vertical-align: bottom;
+}
+.completed {
+	text-decoration: line-through;
+}
+.filtro-selecionado {
+  font-size:19px;
+  font-weight: bold;
 }
 </style>
