@@ -14,16 +14,37 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
-    firebase: null
+    firebase: null,
+    token: null,
+    user: null,
+    signinError: null
   },
   mutations: {
-    iniciarFirebase (state, firebase) {
+    startFirebase (state, firebase) {
       state.firebase = firebase
+    },
+    changeToken (state, token) {
+      state.token = token
+    },
+    changeUser (state, user) {
+      state.user = user
+    },
+    changeSigninError (state, signinError) {
+      state.signinError = signinError
     }
   },
   getters: {
     firebase: state => {
       return state.firebase
+    },
+    token: state => {
+      return state.token
+    },
+    user: state => {
+      return state.user
+    },
+    signinError: state => {
+      return state.signinError
     }
   }
 })
@@ -48,7 +69,7 @@ new Vue({
         storageBucket: '',
         messagingSenderId: '898555721971'
       }
-      this.$store.commit('iniciarFirebase', firebase.initializeApp(config))
+      this.$store.commit('startFirebase', firebase.initializeApp(config))
     }
   }
 })
