@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button v-if="!userName" class="button is-danger vermelhor-google" type="button" v-on:click="openGoogleSigninModal">
+    <button class="button is-danger vermelhor-google" type="button" v-on:click="openGoogleSigninModal">
       <i class="fa fa-google" aria-hidden="true"></i>
       <span class="text">Acessar com Google</span>
     </button>
-    <p v-if="userName" class="salutation">
-      <span>Olá, {{ userName }}</span>
+    <p  class="salutation">
+      <span>Olá, {{ userDisplayName }}</span>
       <a v-on:click="signout">
         <i class="fa fa-sign-out" aria-hidden="true"></i>
       </a>
@@ -14,16 +14,12 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'app-auth',
-  computed: {
-    userName: function () {
-      if (this.$store.getters.user) {
-        return this.$store.getters.user.displayName
-      }
-      return ''
-    }
-  },
+  computed: mapGetters(['userIsSignIn', 'userDisplayName']),
   methods: {
     openGoogleSigninModal: function () {
       var _this = this

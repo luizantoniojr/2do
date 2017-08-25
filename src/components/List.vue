@@ -103,6 +103,7 @@ export default {
   },
   methods: {
     addTodo: function () {
+      debugger
       var value = this.newTodo && this.newTodo.trim()
       if (!value) {
         return

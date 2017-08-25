@@ -45,6 +45,12 @@ const store = new Vuex.Store({
     },
     signinError: state => {
       return state.signinError
+    },
+    userIsSignIn: state => {
+      return state.firebase != null
+    },
+    userDisplayName: state => {
+      return state.firebase.auth().currentUser.displayName
     }
   }
 })
