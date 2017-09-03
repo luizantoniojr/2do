@@ -1,4 +1,4 @@
-# TwoDo
+# 2Do
 
 > Projeto para estudo de Vuejs
 
